@@ -16,7 +16,13 @@ In order to start the bot and add it to your server, you need to first complete 
 2. Create directory named `audio` in the root of the project and place all the audio records you wish to play (the files names are important as they are used to play them).
 3. Add the bot to your server using the discord OAuth2 API.
 
-Run the bot using `npm run start` in project root.
+Install and run the bot using npm:
+
+```
+$ cd ../root
+$ npm install
+$ npm run start
+```
 
 ### Commands
 
