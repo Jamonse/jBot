@@ -72,6 +72,12 @@ client.on("message", async (message) => {
         currentlyPlaying.on("start", () =>
           memberTextChannel.send(`Now playing ${fileName}`)
         );
+        currentlyPlaying.on("error", (err) => {
+          memberTextChannel.send(
+            "An error occured while trying to play audio, a potential cause is that the file is not an audio file"
+          );
+          console.log(err.message);
+        });
         break;
       case (command.match(/^stop/) || {}).input: // Stop case - stop currently plating audio
         if (currentlyPlaying) {
