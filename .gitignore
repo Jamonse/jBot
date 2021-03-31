@@ -1,5 +1,10 @@
 # Ignore the node_modules directory
 node_modules/
 
+# exclude audio and assetes directories
+
+audio/
+assetes/
+
 #  Ignore dot env file due to private token
 .env
