@@ -1,9 +1,8 @@
 require("dotenv").config();
 
-const ClientModule = require("./src/client");
 const fileSystem = require("fs");
-const { Collection } = require("discord.js");
 const JBotClient = require("./src/client");
+const { Collection } = require("discord.js");
 
 const token = process.env.JBOT_TOKEN;
 const PREFIX = "$_"; // Commands prefix
@@ -20,7 +19,7 @@ const commandFiles = fileSystem
   .filter((file) => file.endsWith(".js"));
 // Set command modules to the client
 commandFiles.forEach((file) => {
-  const command = require(`../commands/${file}`);
+  const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 });
 

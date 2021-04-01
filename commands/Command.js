@@ -1,5 +1,5 @@
 const fileSystem = require("fs");
-const { PREFIX } = require("../src/main");
+const { PREFIX } = require("..");
 
 module.exports = {
   name: "command",
