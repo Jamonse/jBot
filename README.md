@@ -33,3 +33,4 @@ All commands must be prefixed with $_
 3. ls - lists all available audio files in audio directory.
 4. stop - stops currently played audio.
 5. command - lists all commands.
+6. exit - leaves voice channel
