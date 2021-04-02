@@ -5,7 +5,7 @@ const JBotClient = require("./src/client");
 const { Collection } = require("discord.js");
 
 const token = process.env.JBOT_TOKEN;
-const PREFIX = "$_"; // Commands prefix
+const PREFIX = "!"; // Commands prefix
 const client = new JBotClient();
 
 module.exports = {

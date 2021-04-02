@@ -20,7 +20,7 @@ Run the bot using `npm run start` in project root.
 
 ### Commands
 
-All commands must be prefixed with $_
+All commands must be prefixed with $\_
 
 1. join - adds the bot to your voice channel.
 2. play <record_name / url> - plays an audio file from audio directory or from a url.
