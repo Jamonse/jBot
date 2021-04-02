@@ -10,5 +10,6 @@ module.exports = class JBotClient extends Client {
     this.commands = new Collection();
     this.config = config;
     this.dispatcher = null;
+    this.voiceChannel = null;
   }
 };
