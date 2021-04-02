@@ -11,15 +11,14 @@ module.exports = class BotManager {
     // Commander text channel
     this.textChannel = message.channel;
     // Bot current voice channel
-    if (this.voiceChannel) {
-      this.botVoiceChannel = message.guild.client.voice.connections.some(
-        (conn) => conn.channel.id == this.voiceChannel.id
-      );
-    }
+    this.botVoiceChannel = message.guild.me.voice.channel;
   }
 
   joinVoiceChannel(greetingMessage, falseAlertMessage) {
     if (!this.voiceChannel) {
+      if (this.botVoiceChannel) {
+        return true;
+      }
       // Commander is not in voice channel
       this.message.reply(
         "you must be in a voice channel in order for me to join"
@@ -45,13 +44,13 @@ module.exports = class BotManager {
       if (greetingMessage) {
         this.textChannel.send(greetingMessage); // Send greetings
       }
-      return this.voiceChannel.join(); // Join voice channel
     } else {
       if (falseAlertMessage) {
         // Bot is already in commander voice channel
         this.message.reply(falseAlertMessage);
       }
     }
+    return this.voiceChannel.join(); // Join voice channel
   }
 
   async playAudio(audioToPlay) {
@@ -59,6 +58,12 @@ module.exports = class BotManager {
     if (!connection) {
       // Could not connect to voice channel
       return;
+    }
+    if (!this.voiceChannel) {
+      // Bot is already in voice channel but commander is not
+      return this.message.reply(
+        "You must be in a voice channel in roder to play audio"
+      );
     }
     if (!audioToPlay || audioToPlay == "") {
       // Audio to play is empty
@@ -95,10 +100,11 @@ module.exports = class BotManager {
     if (!files) {
       // No fiels found
       return this.textChannel.send("No voice records yet.");
-    } // Try and match requested audio name with audio files available
+    } // Try to match requested audio name with audio files available
     audioFile = `${audioFile.join(" ")}`.toLowerCase();
-    const audioToPlay = files.find((file) =>
-      file.toLowerCase().startsWith(audioFile)
+    console.log(audioFile);
+    const audioToPlay = files.find(
+      (file) => this.getFileName(file.toLowerCase()) == audioFile
     ); // No match
     if (!audioToPlay) {
       return this.textChannel.send(`Sorry, could not find audio: ${audioFile}`);
@@ -128,20 +134,26 @@ module.exports = class BotManager {
   }
 
   stopPlaying() {
-    const dispatcher = this.message.guild.client.dispatcher;
-    if (dispatcher) {
-      // Stop currently playing audio
-      dispatcher.end();
+    if (this.inCommanderVoiceChannel()) {
+      const dispatcher = this.message.guild.client.dispatcher;
+      if (dispatcher) {
+        // Stop currently playing audio
+        dispatcher.end();
+      }
     }
   }
 
   leaveVoiceChannel(leavingMessage) {
-    if (this.botVoiceChannel) {
+    if (this.inCommanderVoiceChannel()) {
       // Bot is in the commander channel
       if (leavingMessage) {
         this.textChannel.send(leavingMessage);
       } // Leave voice channel
       this.voiceChannel.leave();
     }
+  }
+
+  inCommanderVoiceChannel() {
+    return this.botVoiceChannel && this.botVoiceChannel == this.voiceChannel;
   }
 };
