@@ -8,7 +8,7 @@ module.exports = {
     const commandFiles = fileSystem
       .readdirSync("./commands")
       .filter((file) => file.endsWith(".js"));
-    let commandsList = `All commands must be prefixed with ${PREFIX} :\n`;
+    let commandsList = `All commands must be prefixed with ${PREFIX}: \n`;
     let i = 1;
     commandFiles.forEach((file) => {
       const command = require(`../commands/${file}`);

@@ -3,6 +3,8 @@ const fileSystem = require("fs");
 const path = require("path");
 const ytdl = require("ytdl-core");
 
+const RANDOM_AUDIO = "random";
+
 module.exports = class BotManager {
   constructor(message) {
     this.message = message;
@@ -103,9 +105,13 @@ module.exports = class BotManager {
     } // Try to match requested audio name with audio files available
     audioFile = `${audioFile.join(" ")}`.toLowerCase();
     console.log(audioFile);
-    const audioToPlay = files.find(
-      (file) => this.getFileName(file.toLowerCase()) == audioFile
-    ); // No match
+    const audioToPlay =
+      audioFile == RANDOM_AUDIO
+        ? this._getRandomAudioFile(files) // Play random audio from audio files list
+        : files.find(
+            // Play requested audio
+            (file) => this.getFileName(file.toLowerCase()) == audioFile
+          ); // No match
     if (!audioToPlay) {
       return this.textChannel.send(`Sorry, could not find audio: ${audioFile}`);
     } // Match! start connection and send play message
@@ -131,6 +137,14 @@ module.exports = class BotManager {
     // Get file name from file path
     const fileExtention = path.extname(filePath);
     return path.basename(filePath, fileExtention);
+  }
+
+  _getRandomAudioFile(files) {
+    const min = 0;
+    const max = files.length - 1;
+    const randomIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+    // Gets audio file from random index
+    return files[randomIndex];
   }
 
   stopPlaying() {

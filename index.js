@@ -5,7 +5,7 @@ const JBotClient = require("./src/client");
 const { Collection } = require("discord.js");
 
 const token = process.env.JBOT_TOKEN;
-const PREFIX = "$_"; // Commands prefix
+const PREFIX = "!"; // Commands prefix
 const client = new JBotClient();
 
 module.exports = {
@@ -56,6 +56,22 @@ client.on("message", (message) => {
     // Command not found
     console.error(error);
     message.reply(`Sorry, could not find command: ${commandName}`);
+  }
+});
+
+client.on("voiceStateUpdate", (oldState, newState) => {
+  if (
+    oldState.channelID !== oldState.guild.me.voice.channelID ||
+    newState.channel
+  ) {
+    return;
+  }
+  if (oldState.channel.members.size == 1) {
+    setTimeout(() => {
+      if (oldState.channel.members.size == 1) {
+        oldState.channel.leave();
+      }
+    }, 300000);
   }
 });
 
