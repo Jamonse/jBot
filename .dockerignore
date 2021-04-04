@@ -1,0 +1,12 @@
+# Ignore node modules
+node_modules
+
+# Ignore node log file
+npm-debug.log
+
+# Ignore audio and assets
+audio
+assets
+
+# Ignore env file (contains bot token)
+.env
