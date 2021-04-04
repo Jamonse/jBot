@@ -99,7 +99,7 @@ module.exports = class BotManager {
 
   async _playFromFile(audioFile, connection) {
     const files = this.getAudioFilesList(); // Get files from audio directory
-    if (!files) {
+    if (!files || !files.length) {
       // No fiels found
       return this.textChannel.send("No voice records yet.");
     } // Try to match requested audio name with audio files available
