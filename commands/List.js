@@ -7,6 +7,9 @@ module.exports = {
     const botManager = new BotManager(message);
     // Gets all audio files from bot manager
     const allFiles = botManager.getAudioFilesList();
+    if (!allFiles || !allFiles.length) {
+      return message.channel.send("No voice records yet.");
+    }
     let audioList = "";
     // Creates audio files names list
     allFiles.forEach((file) => {
