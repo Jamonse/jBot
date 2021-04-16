@@ -2,8 +2,10 @@ const AUDIO_DIRECTORY = "audio";
 const fileSystem = require("fs");
 const path = require("path");
 const ytdl = require("ytdl-core");
+const fetch = require("node-fetch");
 
 const RANDOM_AUDIO = "random";
+const JOKE_API = process.env.JOKE_API;
 
 module.exports = class BotManager {
   constructor(message) {
@@ -122,6 +124,10 @@ module.exports = class BotManager {
     this.message.guild.client.dispatcher.on("start", () =>
       this.textChannel.send(`Now playing ${fileName}`)
     );
+  }
+
+  async getRandomJoke() {
+    return await fetch(JOKE_API);
   }
 
   getAudioFilesList() {
