@@ -26,11 +26,12 @@ $ npm run start
 
 ### Commands
 
-All commands must be prefixed with $\_
+All commands must be prefixed with !:
 
 1. join - adds the bot to your voice channel.
 2. play <record_name / url> - plays an audio file from audio directory or from a url.
 3. ls - lists all available audio files in audio directory.
 4. stop - stops currently played audio.
 5. command - lists all commands.
-6. exit - leaves voice channel
+6. joke - tells a random joke (by the officail joke api https://github.com/15Dkatz/official_joke_api)
+7. exit - leaves voice channel
